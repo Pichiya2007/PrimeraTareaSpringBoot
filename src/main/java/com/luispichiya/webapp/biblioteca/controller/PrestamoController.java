@@ -49,11 +49,11 @@ public class PrestamoController {
         Map<String,String> response = new HashMap<>();
         try {
             prestamoService.guardarPrestamo(prestamo);
-            response.put("message", "El Prestamo Se Agrego Con Exito");
+            response.put("message", "El prestamo se agrego con éxito.");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("message", "Error");
-            response.put("err", "Hubo Un Error Al Crear El Prestamo");
+            response.put("err", "El prestamo no se pudo crear");
             return ResponseEntity.badRequest().body(response);
         }
     }
@@ -70,10 +70,10 @@ public class PrestamoController {
             prestamo.setLibros(prestamoNuevo.getLibros());
             prestamo.setVigencia(prestamoNuevo.getVigencia());
             prestamoService.guardarPrestamo(prestamo);
-            response.put("message", "El Prestamo Se Edito Con Exito");
+            response.put("message", "El prestamo se edito con éxito.");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            response.put("message", "Hubo Un Error Al Editar El Prestamo");
+            response.put("message", "El prestamo no se pudo editar.");
             return ResponseEntity.badRequest().body(response);
         }
     }

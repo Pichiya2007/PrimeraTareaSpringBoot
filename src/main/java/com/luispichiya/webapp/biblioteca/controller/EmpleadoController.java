@@ -46,17 +46,17 @@ public class EmpleadoController {
     public ResponseEntity<Map<String, String>> guardarEmpleado(@RequestBody Empleado empleado){
         Map<String,String> response = new HashMap<>();
         try {
-                if(empleadoService.guardarEmpleado(empleado)){
-                    response.put("message","Empleado Creado Con Exito");
-                }else{
-                    response.put("message","DPI Duplicado");
-                    return ResponseEntity.badRequest().body(response);
-                }    
-            empleadoService.guardarEmpleado(empleado);
-            response.put("message", "El Empleado Se Agrego Con Exito");
-            return ResponseEntity.ok(response);
+            if(empleadoService.guardarEmpleado(empleado)){
+                response.put("message","El empleado se creo con éxito.");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message","Error");
+                response.put("err","DPI Duplicado");
+                return ResponseEntity.badRequest().body(response);
+            }    
         } catch (Exception e) {
-            response.put("err", "Hubo Un Error Al Crear El Empleado");
+            response.put("message", "Error");
+            response.put("err", "El empleado no se pudo agregar.");
             return ResponseEntity.badRequest().body(response);
         }
     }
@@ -71,9 +71,14 @@ public class EmpleadoController {
             empleado.setTelefono(newEmpleado.getTelefono());
             empleado.setDireccion(newEmpleado.getDireccion());
             empleado.setDpi(newEmpleado.getDpi());
-            empleadoService.guardarEmpleado(empleado);
-            response.put("message", "El empleado se edito con éxito.");
-            return ResponseEntity.ok(response);
+            if (empleadoService.guardarEmpleado(empleado)) {
+                response.put("message", "El empleado se edito con éxito.");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("message", "Error");
+                response.put("err", "El empleado no se pudo editar.");
+                return ResponseEntity.badRequest().body(response);
+            }          
         } catch (Exception e) {
             response.put("err", "El empleado no se pudo editar.");
             return ResponseEntity.badRequest().body(response);

@@ -44,14 +44,20 @@ public class EmpleadoController {
     
     @PostMapping("/empleado")
     public ResponseEntity<Map<String, String>> guardarEmpleado(@RequestBody Empleado empleado){
-        Map<String, String> response = new HashMap<>();
+        Map<String,String> response = new HashMap<>();
         try {
+                if(empleadoService.guardarEmpleado(empleado)){
+                    response.put("message","Empleado Creado Con Exito");
+                }else{
+                    response.put("message","DPI Duplicado");
+                    return ResponseEntity.badRequest().body(response);
+                }    
             empleadoService.guardarEmpleado(empleado);
-            response.put("message", "Se agrego el empleado con éxito.");
+            response.put("message", "El Empleado Se Agrego Con Exito");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            response.put("err", "Hubo un error al crear el emplado.");
-            return ResponseEntity.badRequest().body(response);      
+            response.put("err", "Hubo Un Error Al Crear El Empleado");
+            return ResponseEntity.badRequest().body(response);
         }
     }
 

@@ -9,7 +9,7 @@ import com.luispichiya.webapp.biblioteca.model.Cliente;
 import com.luispichiya.webapp.biblioteca.repository.ClienteRepository;
 
 @Service
-public class ClienteService implements IClienteService{
+public class ClienteService implements IClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
@@ -33,5 +33,4 @@ public class ClienteService implements IClienteService{
     public void eliminarCliente(Cliente cliente) {
         clienteRepository.delete(cliente);
     }
-    
 }

@@ -15,29 +15,26 @@ import com.luispichiya.webapp.biblioteca.service.ClienteService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
 @Controller
 @RestController
-@RequestMapping(value = "cliente")
+@RequestMapping(value = "")
 public class ClienteController {
     
     @Autowired
     ClienteService clienteService;
 
-    @GetMapping("/")
+    @GetMapping("/clientes")
     public List<Cliente> listarClientes(){
         return clienteService.listarClientes();
     }
 
-    @GetMapping("/{dpi}")
-    public ResponseEntity<Cliente> buscarClientePorDpi(@PathVariable Long dpi){ //Se usa la anotación PathVariable para usar la variable que venga en la Path.
+    @GetMapping("/cliente")
+    public ResponseEntity<Cliente> buscarClientePorDpi(@RequestParam Long dpi){ //Se usa la anotación PathVariable para usar la variable que venga en la Path.
         try {
             return ResponseEntity.ok(clienteService.buscarClientePorDpi(dpi));    
         } catch (Exception e) {
@@ -45,7 +42,7 @@ public class ClienteController {
         }
     }
     
-    @PostMapping("/")
+    @PostMapping("/cliente")
     public ResponseEntity<Map<String, String>> guardarCliente(@RequestBody Cliente cliente){ //ResponseEntity para el mensaje de respuesta de confirmación.
         Map<String, String> response = new HashMap<>(); // Se crea un HashMap para el mensaje.
         try {
@@ -58,8 +55,8 @@ public class ClienteController {
         }
     }
 
-    @PutMapping("/{dpi}")
-    public ResponseEntity<Map<String, String>> editarCliente(@PathVariable Long dpi, @RequestBody Cliente newCliente){
+    @PutMapping("/cliente")
+    public ResponseEntity<Map<String, String>> editarCliente(@RequestParam Long dpi, @RequestBody Cliente newCliente){
         Map<String, String> response = new HashMap<>();
         try {
             Cliente cliente = clienteService.buscarClientePorDpi(dpi); //Busca el objeto (Cliente a editar).
@@ -75,8 +72,8 @@ public class ClienteController {
         }
     }
 
-    @DeleteMapping("/{dpi}")
-    public ResponseEntity<Map<String, String>> eliminarCliente(@PathVariable Long dpi){
+    @DeleteMapping("/cliente")
+    public ResponseEntity<Map<String, String>> eliminarCliente(@RequestParam Long dpi){
         Map<String, String> response = new HashMap<>();
         try {
             Cliente cliente = clienteService.buscarClientePorDpi(dpi); //Busca el cliente (Objeto completo) y le da el valor a cliente para eliminarlo después.
